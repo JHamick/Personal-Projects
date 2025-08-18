@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test</title>
+</head>
+<body>
+    <h1>PostgreSQL Current Time</h1>
+    <button id="testBtn">Get Current Time</button>
+    <ul id="testList"></ul>
+
+    <script>
+        document.getElementById('testBtn').addEventListener('click', async () => {
+            try {
+                const res = await fetch('/api/testsql');
+                const data = await res.json();
+                const list = document.getElementById('testList');
+                list.innerHTML = ''; // clear previous
+                
+                data.forEach(row => {
+                    const li = document.createElement('li');
+                    li.textContent = `Name: ${row.name}, Email: ${row.email}, Favorite Food: ${row.favoritefood}`;
+                    list.appendChild(li);
+                });
+                
+            } catch (error) {
+                console.error('Error fetching data:', error);
+            }
+        });
+    </script>
+
+    <script>console.log('Page loaded');</script>
+</body>
+</html>
