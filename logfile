@@ -1,0 +1,13 @@
+2025-09-28 15:34:13.048 CEST [59347] LOG:  starting PostgreSQL 14.19 (Homebrew) on aarch64-apple-darwin24.4.0, compiled by Apple clang version 17.0.0 (clang-1700.0.13.3), 64-bit
+2025-09-28 15:34:13.056 CEST [59347] LOG:  listening on IPv6 address "::1", port 5432
+2025-09-28 15:34:13.056 CEST [59347] LOG:  listening on IPv4 address "127.0.0.1", port 5432
+2025-09-28 15:34:13.057 CEST [59347] LOG:  listening on Unix socket "/tmp/.s.PGSQL.5432"
+2025-09-28 15:34:13.059 CEST [59348] LOG:  database system was shut down at 2025-09-28 15:34:05 CEST
+2025-09-28 15:34:13.063 CEST [59347] LOG:  database system is ready to accept connections
+2025-09-28 15:36:39.995 CEST [59700] FATAL:  role "postgres" does not exist
+2025-09-28 15:36:40.000 CEST [59701] FATAL:  role "postgres" does not exist
+2025-09-28 15:39:43.204 CEST [59347] LOG:  received fast shutdown request
+2025-09-28 15:39:43.204 CEST [59347] LOG:  aborting any active transactions
+2025-09-28 15:39:43.206 CEST [59347] LOG:  background worker "logical replication launcher" (PID 59354) exited with exit code 1
+2025-09-28 15:39:43.206 CEST [59349] LOG:  shutting down
+2025-09-28 15:39:43.211 CEST [59347] LOG:  database system is shut down
