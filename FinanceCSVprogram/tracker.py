@@ -21,6 +21,7 @@ df = df.drop(columns=['Description', 'Day Chng $ (Day Change $)', 'Day Chng % (D
 columnsToClean = [2, 3, 5, 6, 7]
 for col in columnsToClean:
         df.iloc[:, col] = pd.to_numeric(df.iloc[:, col].astype(str).str.replace('$','').str.replace(',',''), errors='coerce')   # Making all numbers in columnsToClean type float from type string
+        # Fuck this shit ^^^^^^^^^^^^^
 
 #Portfolio allocation math
 df_mktVal = df.iloc[0:7, 5]  # Taking only rows 0-7 in Column 'Market Value'
@@ -29,29 +30,47 @@ df['% portfolio'] = df_mktVal.div(df_total) # Dividing all rows in df_mktVal by 
 df = df.dropna(subset=['% portfolio'])  # Dropping any NaN values so we can properly plot data with matplot
 
 # Converting Symbol column and Market Value into Lists for mpl.table visualization
-symbols = df['Symbol'].iloc[0:7].tolist()   # only the holdings
-market_values = df['Mkt Val (Market Value)'].iloc[0:7].tolist()
+pie_symbols = df['Symbol'].iloc[0:7].tolist()   # only the holdings
+market_values = df['Mkt Val (Market Value)'].iloc[:].tolist()
 cell_text = [[mv] for mv in market_values]  # 2D list for table
+
+# -----------------------------------------------Section for Pie Chart and Table--------------------------------------------------
+
+# adds total portfolio value to table
+total_value = df_total    
+cell_text.append([total_value])
+
+#  creating a separate list for total row in table
+table_symbols = pie_symbols + ['TOTAL']
+table_values = df['Mkt Val (Market Value)'].iloc[0:7].tolist() + [df_total]
+cell_text = [[v] for v in table_values]
 
 # visualize data
 
 # Create figure with 1 row, 2 columns
-fig, axes = mpl.subplots(1, 2, figsize=(12, 6))
+fig, axes = mpl.subplots(2, 2, figsize=(12, 6))
 
 # Left subplot: pie chart
-axes[0].pie(df['% portfolio'], labels=symbols, autopct='%1.1f%%')
-axes[0].set_title('Portfolio Allocation')
+axes[0, 0].pie(df['% portfolio'], labels=pie_symbols, autopct='%1.1f%%')
+axes[0, 0].set_title('Portfolio Allocation')
 
 # Right subplot: table
-axes[1].axis('off')  # hide axes
-table = axes[1].table(cellText=cell_text,
-                       rowLabels=symbols,
-                       colLabels=['Market Value'],
-                       loc='center')
+axes[0, 1].axis('off')  # hide axes
+table = axes[0, 1].table(cellText=cell_text, rowLabels=table_symbols, colLabels=['Market Value'], loc='center')
 table.auto_set_font_size(False)
 table.set_fontsize(10)
 table.scale(0.25, 1.5)  # adjust scaling to fit symbols
 
+# -----------------------------------------------Section for Holding Gain/Loss--------------------------------------------------
+# should be very similar to above table
+
+
+
+# -----------------------------------------------Section for Overall Gain/Loss--------------------------------------------------
+# Just a big number and percentage
+
+
 # Adjust layout so nothing is clipped
 fig.tight_layout()
+# show me the money
 mpl.show()
